@@ -12,6 +12,9 @@ report.html
 # Artefactos de exploración de Playwright MCP
 .playwright-mcp/
 
+# Informe ejecutivo generado
+Informe ejecutivo/
+
 # Logs
 logs
 *.log

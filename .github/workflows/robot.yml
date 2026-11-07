@@ -37,10 +37,16 @@ jobs:
       - name: Ejecutar pruebas
         run: python -m robot --outputdir results --name "Simulacion Credito Hipotecario" tests
 
+      - name: Generar informe ejecutivo
+        if: always()
+        run: python generar_informe.py
+
       - name: Publicar reporte y evidencias
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: reporte-robot
-          path: results/
+          path: |
+            results/
+            Informe ejecutivo/
           retention-days: 30

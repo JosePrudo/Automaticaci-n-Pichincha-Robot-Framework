@@ -42,6 +42,32 @@
       "problemMatcher": []
     },
     {
+      "label": "Generar informe ejecutivo",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["generar_informe.py"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Robot: ejecutar tests + informe",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["generar_informe.py"],
+      "dependsOrder": "sequence",
+      "dependsOn": ["Robot: ejecutar tests"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Robot: ejecutar tests (visible) + informe",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["generar_informe.py"],
+      "dependsOrder": "sequence",
+      "dependsOn": ["Robot: ejecutar tests (navegador visible)"],
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
       "label": "Robot: solo smoke",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/Scripts/python.exe",

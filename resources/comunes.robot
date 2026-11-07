@@ -24,7 +24,7 @@ Cerrar Navegador
     Close Browser    ALL
 
 Capturar Evidencia
-    [Documentation]    Guarda la captura como archivo en results/evidencias y la muestra en el log.
+    [Documentation]    Guarda la captura como archivo en results/evidencias/<escenario> y la muestra en el log.
     [Arguments]    ${nombre}=evidencia
     Log    Evidencia: ${nombre}
-    Take Screenshot    filename=${OUTPUT_DIR}/evidencias/${nombre}
+    Take Screenshot    filename=${OUTPUT_DIR}/evidencias/${TEST_NAME}/${nombre}
