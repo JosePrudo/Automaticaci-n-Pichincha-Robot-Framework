@@ -22,6 +22,57 @@ EVIDENCIAS_DIR = RESULTS_DIR / "evidencias"
 DESTINO_DIR = BASE_DIR / "Informe ejecutivo"
 DESTINO_HTML = DESTINO_DIR / "informe_ejecutivo.html"
 
+# Descripcion amigable de cada paso (nombre del archivo de evidencia -> explicacion).
+DESCRIPCIONES: dict[str, str] = {
+    "smoke-home": "Se abre el simulador y se verifica que la pagina inicial carga correctamente.",
+    # Seccion 1: Proyecto
+    "01-proyecto-inicio": "Inicio de la seccion Proyecto: se muestra el formulario del proyecto de vivienda.",
+    "01-proyecto-aplicante": "Se selecciona el tipo de aplicante (Individual).",
+    "01-proyecto-vivienda": "Se selecciona el tipo de vivienda (Casa).",
+    "01-proyecto-ciudad": "Se elige la ciudad de la vivienda (Quito).",
+    "01-proyecto-siguiente": "Se avanza a la seccion Finanzas con el boton Siguiente.",
+    # Seccion 2: Finanzas
+    "02-finanzas-inicio": "Inicio de la seccion Finanzas: formulario de situacion financiera.",
+    "02-finanzas-situacion": "Se selecciona la situacion laboral (Empleado).",
+    "02-finanzas-ingresos": "Se ingresan los ingresos netos mensuales.",
+    "02-finanzas-ahorro": "Se ingresa el monto ahorrado para la cuota inicial.",
+    "02-finanzas-nacimiento": "Se registra la fecha de nacimiento.",
+    "02-finanzas-estado-civil": "Se selecciona el estado civil (Soltero).",
+    "02-finanzas-siguiente": "Se avanza a la seccion Personaliza con el boton Siguiente.",
+    # Seccion 3: Personaliza
+    "03-personaliza-inicio": "Inicio de la seccion Personaliza: configuracion del credito.",
+    "03-personaliza-monto": "Se ingresa el monto del prestamo deseado.",
+    "03-personaliza-plazo": "Se selecciona el plazo del credito (20 anios).",
+    "03-personaliza-cuota": "Se elige el tipo de cuota (Fija).",
+    "03-personaliza-blur": "Se confirma el monto para habilitar el boton Siguiente.",
+    "03-personaliza-siguiente": "Se avanza a la seccion Resultados con el boton Siguiente.",
+    # Seccion 4: Resultados
+    "04-resultados": "Se visualiza la cuota estimada y los seguros calculados.",
+    "04-resultados-siguiente": "Se avanza a la seccion Capacidades con el boton Siguiente.",
+    # Seccion 5: Capacidades
+    "05-capacidades-inicio": "Inicio de la seccion Capacidades: datos personales del solicitante.",
+    "05-capacidades-nombre": "Se ingresa el nombre completo.",
+    "05-capacidades-cedula": "Se ingresa el numero de cedula/documento.",
+    "05-capacidades-email": "Se ingresa el correo electronico.",
+    "05-capacidades-telefono": "Se ingresa el telefono celular.",
+    "05-capacidades-cargas": "Se indica el numero de cargas familiares.",
+    "05-capacidades-empresa": "Se ingresa la empresa donde trabaja.",
+    "05-capacidades-autoriza": "Se autoriza la consulta del historial crediticio.",
+    "05-capacidades-siguiente": "Se avanza a la seccion Contacto con el boton Siguiente.",
+    # Seccion 6: Contacto
+    "06-contacto-inicio": "Inicio de la seccion Contacto: preferencias de contacto.",
+    "06-contacto-horario": "Se selecciona el horario preferido de contacto (Maniana).",
+    "06-contacto-medio": "Se selecciona el medio de contacto preferido.",
+    "06-contacto-privacidad": "Se aceptan las politicas de privacidad.",
+    "06-contacto-siguiente": "Se avanza a la seccion Confirmacion con el boton Siguiente.",
+    # Seccion 7: Confirmacion
+    "07-confirmacion-resumen": "Se muestra el resumen de la simulacion y el codigo generado.",
+    "07-confirmacion-check": "Se confirma que la informacion es correcta y completa.",
+    "07-confirmacion-listo": "El boton Aceptar y Enviar queda habilitado, listo para el envio.",
+    "08-enviar": "Se hace clic en Aceptar y Enviar para enviar la simulacion.",
+    "08-enviado": "Estado final de la pantalla tras el envio de la simulacion.",
+}
+
 
 def _formatear_duracion(ms: float) -> str:
     segundos = ms / 1000.0
@@ -38,9 +89,11 @@ def _recolectar_tests(suite, acumulado):
         _recolectar_tests(hija, acumulado)
 
 
-def _caption(nombre_archivo: str) -> str:
-    texto = Path(nombre_archivo).stem
-    return texto.replace("-", " ").replace("_", " ").strip()
+def _descripcion(nombre_archivo: str) -> str:
+    stem = Path(nombre_archivo).stem
+    if stem in DESCRIPCIONES:
+        return DESCRIPCIONES[stem]
+    return stem.replace("-", " ").replace("_", " ").strip()
 
 
 def _img_base64(ruta: Path) -> str:
@@ -91,7 +144,7 @@ def generar() -> int:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Informe Ejecutivo - Simulacion Credito Hipotecario</title>
+<title>Informe Ejecutivo · Simulación de Crédito Hipotecario</title>
 <style>
   :root {{ --amarillo:#FFDD00; --azul:#003a70; --verde:#1e8e3e; --rojo:#d93025; --gris:#5f6368; }}
   * {{ box-sizing: border-box; }}
@@ -121,12 +174,16 @@ def generar() -> int:
   .paso .cap {{ padding:8px 10px; font-size:12px; color:#333; }}
   .paso .idx {{ color:var(--azul); font-weight:700; margin-right:6px; }}
   .sin {{ padding:16px 20px; color:var(--gris); font-style:italic; }}
+  .intro {{ background:#fff; border-left:5px solid var(--amarillo); border-radius:8px; padding:16px 20px; margin:18px 0; box-shadow:0 1px 3px rgba(0,0,0,.12); }}
+  .intro h2 {{ margin-top:0; }}
+  .intro p {{ font-size:14px; line-height:1.55; color:#333; }}
+  .intro .nota {{ font-size:13px; color:var(--gris); }}
   footer {{ text-align:center; color:var(--gris); font-size:12px; padding:24px; }}
 </style>
 </head>
 <body>
 <header>
-  <h1>Informe Ejecutivo &middot; Simulacion de Credito Hipotecario</h1>
+  <h1>Informe Ejecutivo &middot; Simulación de Crédito Hipotecario</h1>
   <p>Banco Pichincha &middot; Generado el {escape(generado)}</p>
 </header>
 <main>
@@ -139,6 +196,16 @@ def generar() -> int:
       <div class="barra"><span style="width:{tasa:.0f}%"></span></div>
     </div>
   </div>
+  <section class="intro">
+    <h2>¿Qué valida esta prueba?</h2>
+    <p>Se automatiza el simulador de <strong>Credito Hipotecario</strong> del Banco Pichincha, un asistente
+    de <strong>7 secciones</strong>: Proyecto, Finanzas, Personaliza, Resultados, Capacidades, Contacto y
+    Confirmacion. En cada escenario se completan los campos de una o varias secciones y se verifica que el
+    asistente avanza correctamente. Debajo de cada escenario encontraras las <strong>evidencias paso a paso</strong>
+    (una captura por accion) con una breve explicacion de lo que ocurre en cada una.</p>
+    <p class="nota">Nota: el envio final ("Aceptar y Enviar") depende de un servicio externo; las pruebas validan
+    el flujo hasta habilitar el envio, sin asumir la respuesta del servidor.</p>
+  </section>
   <h2>Detalle por escenario</h2>
 """)
 
@@ -165,7 +232,7 @@ def generar() -> int:
                 partes.append(
                     f'      <figure class="paso" style="margin:0">'
                     f'<img src="{_img_base64(img)}" alt="{escape(img.stem)}">'
-                    f'<figcaption class="cap"><span class="idx">{i:02d}</span>{escape(_caption(img.name))}</figcaption>'
+                    f'<figcaption class="cap"><span class="idx">{i:02d}</span>{escape(_descripcion(img.name))}</figcaption>'
                     f'</figure>\n'
                 )
             partes.append('    </div>\n')
