@@ -69,45 +69,51 @@ Verificar Seccion
     [Arguments]    ${titulo}
     Get Text    h2    ==    ${titulo}
 
+Ejecutar Paso
+    [Documentation]    Ejecuta una acción de la prueba y guarda una captura de evidencia del paso.
+    [Arguments]    ${descripcion}    ${keyword}    @{args}
+    Run Keyword    ${keyword}    @{args}
+    Capturar Evidencia    ${descripcion}
+
 Completar Seccion Proyecto
     [Documentation]    Sección 1: tipo de aplicante, tipo de vivienda y ciudad.
     [Arguments]    ${aplicante}=${PROY_INDIVIDUAL}    ${vivienda}=${PROY_CASA}    ${ciudad}=Quito
     Verificar Seccion    Tu proyecto de vivienda
-    Check Checkbox    ${aplicante}
-    Check Checkbox    ${vivienda}
-    Select Options By    select    label    ${ciudad}
-    Capturar Evidencia    01-proyecto
-    Click    ${BTN_SIGUIENTE}
+    Capturar Evidencia    01-proyecto-inicio
+    Ejecutar Paso    01-proyecto-aplicante    Check Checkbox    ${aplicante}
+    Ejecutar Paso    01-proyecto-vivienda    Check Checkbox    ${vivienda}
+    Ejecutar Paso    01-proyecto-ciudad    Select Options By    select    label    ${ciudad}
+    Ejecutar Paso    01-proyecto-siguiente    Click    ${BTN_SIGUIENTE}
 
 Completar Seccion Finanzas
     [Documentation]    Sección 2: situación laboral, ingresos, ahorro, nacimiento y estado civil.
     [Arguments]    ${situacion}=${FIN_EMPLEADO}    ${ingresos}=2500    ${ahorro}=40000
     ...    ${nacimiento}=1990-05-15    ${estado_civil}=Soltero
     Verificar Seccion    Tu situación financiera
-    Check Checkbox    ${situacion}
-    Fill Text    ${FIN_INGRESOS}    ${ingresos}
-    Fill Text    ${FIN_AHORRO}    ${ahorro}
-    Fill Text    ${FIN_FECHA}    ${nacimiento}
-    Select Options By    select    label    ${estado_civil}
-    Capturar Evidencia    02-finanzas
-    Click    ${BTN_SIGUIENTE}
+    Capturar Evidencia    02-finanzas-inicio
+    Ejecutar Paso    02-finanzas-situacion    Check Checkbox    ${situacion}
+    Ejecutar Paso    02-finanzas-ingresos    Fill Text    ${FIN_INGRESOS}    ${ingresos}
+    Ejecutar Paso    02-finanzas-ahorro    Fill Text    ${FIN_AHORRO}    ${ahorro}
+    Ejecutar Paso    02-finanzas-nacimiento    Fill Text    ${FIN_FECHA}    ${nacimiento}
+    Ejecutar Paso    02-finanzas-estado-civil    Select Options By    select    label    ${estado_civil}
+    Ejecutar Paso    02-finanzas-siguiente    Click    ${BTN_SIGUIENTE}
 
 Completar Seccion Personalizacion
     [Documentation]    Sección 3: monto, plazo y tipo de cuota.
     [Arguments]    ${monto}=120000    ${plazo}=20 años    ${cuota}=${PER_FIJA}
     Verificar Seccion    Personaliza tu crédito de vivienda
-    Fill Text    ${PER_MONTO}    ${monto}
-    Select Options By    select    label    ${plazo}
-    Check Checkbox    ${cuota}
-    Click    h1    # Quita el foco del monto para habilitar "Siguiente"
-    Capturar Evidencia    03-personaliza
-    Click    ${BTN_SIGUIENTE}
+    Capturar Evidencia    03-personaliza-inicio
+    Ejecutar Paso    03-personaliza-monto    Fill Text    ${PER_MONTO}    ${monto}
+    Ejecutar Paso    03-personaliza-plazo    Select Options By    select    label    ${plazo}
+    Ejecutar Paso    03-personaliza-cuota    Check Checkbox    ${cuota}
+    Ejecutar Paso    03-personaliza-blur    Click    h1
+    Ejecutar Paso    03-personaliza-siguiente    Click    ${BTN_SIGUIENTE}
 
 Completar Seccion Resultados
     [Documentation]    Sección 4: muestra la cuota estimada y los seguros.
     Verificar Seccion    Tus resultados
     Capturar Evidencia    04-resultados
-    Click    ${BTN_SIGUIENTE}
+    Ejecutar Paso    04-resultados-siguiente    Click    ${BTN_SIGUIENTE}
 
 Completar Seccion Capacidades
     [Documentation]    Sección 5: datos personales y autorización de consulta crediticia.
@@ -115,38 +121,39 @@ Completar Seccion Capacidades
     ...    ${email}=juan.perez@example.com    ${telefono}=0991234567
     ...    ${cargas}=2    ${empresa}=Empresa Tecnologica SAS
     Verificar Seccion    Tu capacidad real
-    Fill Text    ${CAP_NOMBRE}    ${nombre}
-    Fill Text    ${CAP_CEDULA}    ${cedula}
-    Fill Text    ${CAP_EMAIL}    ${email}
-    Fill Text    ${CAP_TELEFONO}    ${telefono}
-    Fill Text    ${CAP_CARGAS}    ${cargas}
-    Fill Text    ${CAP_EMPRESA}    ${empresa}
-    Check Checkbox    ${CAP_AUTORIZA}
-    Capturar Evidencia    05-capacidades
-    Click    ${BTN_SIGUIENTE}
+    Capturar Evidencia    05-capacidades-inicio
+    Ejecutar Paso    05-capacidades-nombre    Fill Text    ${CAP_NOMBRE}    ${nombre}
+    Ejecutar Paso    05-capacidades-cedula    Fill Text    ${CAP_CEDULA}    ${cedula}
+    Ejecutar Paso    05-capacidades-email    Fill Text    ${CAP_EMAIL}    ${email}
+    Ejecutar Paso    05-capacidades-telefono    Fill Text    ${CAP_TELEFONO}    ${telefono}
+    Ejecutar Paso    05-capacidades-cargas    Fill Text    ${CAP_CARGAS}    ${cargas}
+    Ejecutar Paso    05-capacidades-empresa    Fill Text    ${CAP_EMPRESA}    ${empresa}
+    Ejecutar Paso    05-capacidades-autoriza    Check Checkbox    ${CAP_AUTORIZA}
+    Ejecutar Paso    05-capacidades-siguiente    Click    ${BTN_SIGUIENTE}
 
 Completar Seccion Contacto
     [Documentation]    Sección 6: horario, medio de contacto y aceptación de políticas.
     [Arguments]    ${horario}=${CON_MANANA}    ${medio}=${CON_CORREO}
     Verificar Seccion    Quiero que me Contacten
-    Check Checkbox    ${horario}
-    Check Checkbox    ${medio}
-    Check Checkbox    ${CON_PRIVACIDAD}
-    Capturar Evidencia    06-contacto
-    Click    ${BTN_SIGUIENTE}
+    Capturar Evidencia    06-contacto-inicio
+    Ejecutar Paso    06-contacto-horario    Check Checkbox    ${horario}
+    Ejecutar Paso    06-contacto-medio    Check Checkbox    ${medio}
+    Ejecutar Paso    06-contacto-privacidad    Check Checkbox    ${CON_PRIVACIDAD}
+    Ejecutar Paso    06-contacto-siguiente    Click    ${BTN_SIGUIENTE}
 
 Confirmar Simulacion
     [Documentation]    Sección 7: valida el resumen y habilita el envío.
     Verificar Seccion    Confirmación
     Wait For Elements State    text=Código de tu simulación    visible
     Wait For Elements State    text=Resumen de lo que simulaste    visible
-    Check Checkbox    ${CNF_CONFIRMAR}
+    Capturar Evidencia    07-confirmacion-resumen
+    Ejecutar Paso    07-confirmacion-check    Check Checkbox    ${CNF_CONFIRMAR}
     Wait For Elements State    ${BTN_ENVIAR}    enabled
-    Capturar Evidencia    07-confirmacion
+    Capturar Evidencia    07-confirmacion-listo
 
 Enviar Simulacion
     [Documentation]    Hace clic en "Aceptar y Enviar".
-    Click    ${BTN_ENVIAR}
+    Ejecutar Paso    08-enviar    Click    ${BTN_ENVIAR}
 
 Completar Simulacion Completa
     [Documentation]    Recorre las 7 secciones del asistente de principio a fin.
