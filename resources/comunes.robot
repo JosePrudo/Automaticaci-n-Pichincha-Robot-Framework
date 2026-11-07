@@ -24,7 +24,7 @@ Cerrar Navegador
     Close Browser    ALL
 
 Capturar Evidencia
-    [Documentation]    Inserta una captura de pantalla embebida en el log del reporte.
+    [Documentation]    Guarda la captura como archivo en results/evidencias y la muestra en el log.
     [Arguments]    ${nombre}=evidencia
     Log    Evidencia: ${nombre}
-    Take Screenshot    EMBED    fullPage=True
+    Take Screenshot    filename=${OUTPUT_DIR}/evidencias/${nombre}
