@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Robot: ejecutar tests",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-m", "robot",
+        "--outputdir", "results",
+        "--name", "Simulacion Credito Hipotecario",
+        "tests"
+      ],
+      "options": {
+        "env": {
+          "NODE_OPTIONS": "--use-system-ca",
+          "PLAYWRIGHT_BROWSERS_PATH": "${env:LOCALAPPDATA}\\ms-playwright"
+        }
+      },
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Robot: solo smoke",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-m", "robot",
+        "--outputdir", "results",
+        "--include", "smoke",
+        "tests"
+      ],
+      "options": {
+        "env": {
+          "NODE_OPTIONS": "--use-system-ca",
+          "PLAYWRIGHT_BROWSERS_PATH": "${env:LOCALAPPDATA}\\ms-playwright"
+        }
+      },
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Robocop: analizar código",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["-m", "robocop", "check", "tests", "resources"],
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,3 +1,17 @@
+# Entorno virtual de Python
+.venv/
+venv/
+
+# Resultados y reportes de Robot Framework
+results/
+output.xml
+log.html
+report.html
+*.png
+
+# Artefactos de exploración de Playwright MCP
+.playwright-mcp/
+
 # Logs
 logs
 *.log
