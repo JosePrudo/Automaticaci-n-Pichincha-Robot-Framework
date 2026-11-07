@@ -8,13 +8,14 @@ Library             Browser    run_on_failure=Take Screenshot    timeout=0:00:20
 *** Variables ***
 ${NAVEGADOR}        chromium
 ${HEADLESS}         ${True}
+${CAMARA_LENTA}     0:00:00
 
 
 *** Keywords ***
 Abrir Navegador
     [Documentation]    Abre un navegador y navega a la URL indicada.
     [Arguments]    ${url}
-    New Browser    browser=${NAVEGADOR}    headless=${HEADLESS}
+    New Browser    browser=${NAVEGADOR}    headless=${HEADLESS}    slowMo=${CAMARA_LENTA}
     New Context    viewport={'width': 1366, 'height': 768}
     New Page    ${url}
 

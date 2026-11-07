@@ -21,6 +21,27 @@
       "problemMatcher": []
     },
     {
+      "label": "Robot: ejecutar tests (navegador visible)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-m", "robot",
+        "--outputdir", "results",
+        "--name", "Simulacion Credito Hipotecario",
+        "--variable", "HEADLESS:False",
+        "--variable", "CAMARA_LENTA:0:00:01",
+        "tests"
+      ],
+      "options": {
+        "env": {
+          "NODE_OPTIONS": "--use-system-ca",
+          "PLAYWRIGHT_BROWSERS_PATH": "${env:LOCALAPPDATA}\\ms-playwright"
+        }
+      },
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
       "label": "Robot: solo smoke",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/Scripts/python.exe",
